@@ -201,13 +201,17 @@ class PersonDetailsViewController: UIViewController {
     
     func setBirthDate(birthDate: String) {
         let birthYear = birthDate.prefix(4)
-        let birthDay = birthDate.suffix(2)
+        var birthDay = String(birthDate.suffix(2))
+        
+        if birthDay[birthDay.startIndex] == "0" {
+            birthDay = String(birthDay[birthDay.index(birthDay.startIndex, offsetBy: 1)])
+        }
         
         let start = birthDate.index(birthDate.startIndex, offsetBy: 5)
         let end = birthDate.index(birthDate.startIndex, offsetBy: 6)
-        let birthMonth = birthDate[start...end]
+        let birthMonth = String(birthDate[start...end])
         
-        personDetailsView.dateOfBirthLabel.text = "\(birthMonth)/\(birthDay)/\(birthYear)"
+        personDetailsView.dateOfBirthLabel.text = "\(birthMonth.getMonth()) \(birthDay), \(birthYear)"
         
         personDetailsView.bornTextLabel.isHidden = false
         personDetailsView.dateOfBirthLabel.isHidden = false
@@ -216,13 +220,17 @@ class PersonDetailsViewController: UIViewController {
     
     func setDeathDate(deathDate: String) {
         let deathYear = deathDate.prefix(4)
-        let deathDay = deathDate.suffix(2)
+        var deathDay = String(deathDate.suffix(2))
+        
+        if deathDay[deathDay.startIndex] == "0" {
+            deathDay = String(deathDay[deathDay.index(deathDay.startIndex, offsetBy: 1)])
+        }
 
         let start = deathDate.index(deathDate.startIndex, offsetBy: 5)
         let end = deathDate.index(deathDate.startIndex, offsetBy: 6)
-        let deathMonth = deathDate[start...end]
+        let deathMonth = String(deathDate[start...end])
                 
-        personDetailsView.dateOfDeathLabel.text = "\(deathMonth)/\(deathDay)/\(deathYear)"
+        personDetailsView.dateOfDeathLabel.text = "\(deathMonth.getMonth()) \(deathDay), \(deathYear)"
         
         personDetailsView.diedTextLabel.isHidden = false
         personDetailsView.dateOfDeathLabel.isHidden = false

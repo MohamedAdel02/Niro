@@ -299,13 +299,17 @@ class MovieDetailsViewController: UIViewController{
     
     func handleReleaseDate(releaseDate: String) -> String {
         let releaseYear = releaseDate.prefix(4)
-        let releaseDay = releaseDate.suffix(2)
+        var releaseDay = String(releaseDate.suffix(2))
+        
+        if releaseDay[releaseDay.startIndex] == "0" {
+            releaseDay = String(releaseDay[releaseDay.index(releaseDay.startIndex, offsetBy: 1)])
+        }
         
         let start = releaseDate.index(releaseDate.startIndex, offsetBy: 5)
         let end = releaseDate.index(releaseDate.startIndex, offsetBy: 6)
-        let releaseMonth = releaseDate[start...end]
+        let releaseMonth = String(releaseDate[start...end])
         
-        return "\(releaseMonth)/\(releaseDay)/\(releaseYear)"
+        return "\(releaseMonth.getMonth()) \(releaseDay), \(releaseYear)"
     }
     
     
