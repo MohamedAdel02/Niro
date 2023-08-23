@@ -34,27 +34,4 @@ struct SearchResult: Codable {
         
     }
     
-    
-    init(id: Int, title: String?, name: String?, type: String, posterPath: String?, profilePath: String?) {
-        
-        self.id = id
-        self.title = title
-        self.name = name
-        self.posterPath = posterPath
-        self.profilePath = profilePath
-        
-        
-        if type == "movie" {
-            self.type = "Movie"
-            
-        } else if type == "tv" {
-            self.type = "TV Show"
-            
-        } else {
-            self.type = ""
-            
-        }
-        
-    }
-    
 }

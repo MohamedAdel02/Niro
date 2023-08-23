@@ -13,7 +13,7 @@ class AllFilmographyViewController: UIViewController {
     var filmography: Filmography?
     var departments = [(department: String, isActive: Bool)]()
     var department = ""
-    var titles = [Title]()
+    var titles = [FilmographyItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -114,12 +114,12 @@ class SearchTableViewController: UITableViewController, SelectCellProtocol {
     
     func getVC(id: Int, type: String) -> UIViewController {
         
-        if type == "Movie" {
+        if type == "movie" {
             let vc = MovieDetailsViewController()
             vc.movieId = id
             return vc
             
-        } else if type == "TV Show" {
+        } else if type == "tv" {
             let vc = TVShowDetailsViewController()
             vc.showId = id
             return vc

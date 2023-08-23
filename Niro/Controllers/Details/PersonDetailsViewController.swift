@@ -12,7 +12,7 @@ class PersonDetailsViewController: UIViewController {
     let personDetailsView = PersonDetailsView()
     var personId: Int!
     var personDetails: PersonDetails?
-    var filmography = [Title]()
+    var filmography = [FilmographyItem]()
     var allFilmography: Filmography?
     
     var websites = [(name: "TMDB", url: K.URL.tmdbPerson)]
@@ -118,40 +118,15 @@ class PersonDetailsViewController: UIViewController {
     }
     
     
-    func handleTitlesData(titles: [Title]) {
+    func handleTitlesData(titles: [FilmographyItem]) {
         
-        var numOfTitles = 0
-        
-        for title in titles {
-
-            if numOfTitles > 14 {
-                break
-            }
-            
-            self.filmography.append(Title(id: title.id, title: title.title, name: title.name, mediaType: title.mediaType, posterPath: title.posterPath, character: title.character, department: title.department, job: title.job))
-            
-            numOfTitles += 1
-        }
+        filmography = titles
     }
     
     
-    func handleTitlesData(titles: [Title], department: String) {
+    func handleTitlesData(titles: [FilmographyItem], department: String) {
         
-        var numOfTitles = 0
-        
-        for title in titles {
-            if numOfTitles > 14 {
-                break
-            }
-            
-            if department == title.department {
-                self.filmography.append(Title(id: title.id, title: title.title, name: title.name, mediaType: title.mediaType, posterPath: title.posterPath, character: title.character, department: title.department, job: title.job))
-                
-                numOfTitles += 1
-
-            }
-        }
-                
+        filmography = titles.filter({ $0.department == department })
     }
 
     
@@ -275,7 +250,7 @@ extension PersonDetailsViewController: UICollectionViewDataSource, UICollectionV
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filmography.isEmpty ? 0 : filmography.count
+        return filmography.count < 15 ? filmography.count : 14
     }
     
     

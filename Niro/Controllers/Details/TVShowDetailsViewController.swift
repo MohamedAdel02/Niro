@@ -13,7 +13,6 @@ class TVShowDetailsViewController: UIViewController {
     var showId: Int!
     var showDetails: TVShowDetails?
     var cast = [CastMember]()
-    var allCast = [CastMember]()
     var isFavorite = false
     var isOnWatchlist = false
     var isRated = false
@@ -154,19 +153,8 @@ class TVShowDetailsViewController: UIViewController {
     
     func handleCastData(cast: [CastMember]) async throws {
         
-        allCast = cast
+        self.cast = cast
         
-        var numOfcastMembers = 0
-        
-        for castMember in cast {
-            if numOfcastMembers > 14 {
-                break
-            }
-            
-            self.cast.append(CastMember(id: castMember.id, name: castMember.name, profilePath: castMember.profilePath, character: castMember.character, roles: castMember.roles))
-            
-            numOfcastMembers += 1
-        }
         tvShowDetailsView.castView.collectionView.reloadData()
     }
     
@@ -380,7 +368,7 @@ class TVShowDetailsViewController: UIViewController {
             tvShowDetailsView.activityView.favoriteButton.tintColor = .systemRed
             tvShowDetailsView.activityView.favoriteLabel.textColor = .systemRed
             
-            UserListHelper.shared.addToFavorite(Item(id: showId, title: showDetails.name, poster: showDetails.poster, type: "tv"))
+            UserListHelper.shared.addToFavorite(Title(id: showId, title: showDetails.name, poster: showDetails.poster, type: "tv"))
             isFavorite = true
         } catch {
             showAlert(title: "Cannot add \(showDetails.name) to favorite", message: "An error occurred while adding the show to favorites")
@@ -430,7 +418,7 @@ class TVShowDetailsViewController: UIViewController {
         
         do {
             let data: [String: Any] = [
-                "type": "movie",
+                "type": "tv",
                 "title": showDetails.name,
                 "poster": showDetails.poster as Any
             ]
@@ -439,7 +427,7 @@ class TVShowDetailsViewController: UIViewController {
             tvShowDetailsView.activityView.watchlistButton.tintColor = UIColor(named: "watchlistButtonColor")
             tvShowDetailsView.activityView.watchlistLabel.textColor = UIColor(named: "watchlistButtonColor")
             
-            UserListHelper.shared.addToWatchlist(Item(id: showId, title: title, poster: showDetails.poster, type: "tv"))
+            UserListHelper.shared.addToWatchlist(Title(id: showId, title: title, poster: showDetails.poster, type: "tv"))
             isOnWatchlist = true
         } catch {
             showAlert(title: "Cannot add \(showDetails.name) to watchlist", message: "An error occurred while adding the show to watchlist")
@@ -450,12 +438,12 @@ class TVShowDetailsViewController: UIViewController {
     
     @objc func seeAllCastPressed() {
         
-        if allCast.isEmpty {
+        if cast.isEmpty {
             return
         }
         
         let vc = AllCastTableViewController()
-        vc.cast = allCast
+        vc.cast = cast
         vc.title = "All Cast"
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -568,7 +556,7 @@ class TVShowDetailsViewController: UIViewController {
             
             UserListHelper.shared.updateRatings(index: index, rating: rating)
         } else {
-            UserListHelper.shared.addToUserRatings(Item(id: showId, title: nil, name: showDetails?.name, posterPath: showDetails?.posterPath, rating: rating, type: "tv"))
+            UserListHelper.shared.addToUserRatings(Title(id: showId, title: nil, name: showDetails?.name, posterPath: showDetails?.posterPath, rating: rating, type: "tv"))
         }
     }
     
@@ -613,7 +601,7 @@ extension TVShowDetailsViewController: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tvShowDetailsView.castView.collectionView {
-            return cast.count
+            return cast.count < 15 ? cast.count : 14
         } else if collectionView == tvShowDetailsView.seasonsView.collectionView {
             return showDetails?.seasons.count ?? 0
         } else {

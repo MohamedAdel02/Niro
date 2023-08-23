@@ -15,7 +15,7 @@ enum MediaType {
 
 class MoviesCollectionViewController: UICollectionViewController {
 
-    var items = [Item]()
+    var titles = [Title]()
     
     var url = NetworkHelper.getPopularMoviesURL()
     var mediaType: MediaType = .movie
@@ -54,48 +54,60 @@ class MoviesCollectionViewController: UICollectionViewController {
     
     func handleData(data: List) async throws {
         
-        for item in data.results {
-            let poster = try await getPoster(item: item)
-            items.append(Item(id: item.id, title: item.title, name: item.name, poster: poster))
-        }
+        titles = data.results
     }
     
-    
-    func getPoster(item: Item) async throws -> Data? {
-        
-        if let posterPath = item.posterPath {
-            return try await NetworkManager.shared.data(imagePath: posterPath)
-        }
-        
-        return nil
-    }
-        
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.isEmpty ? 0 : 18
+        return titles.isEmpty ? 0 : 18
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.Identifier.moviesCollectionViewCell, for: indexPath) as! MoviesCollectionViewCell
         
-        if let posterData = items[indexPath.row].poster {
-
-            cell.imageView.image = UIImage(data: posterData)
-        } else {
-        
-            handleDefaultImage(cell: cell, indexPath: indexPath)
+        Task {
+            await handleImageView(cell: cell, indexPath: indexPath)
         }
         
         return cell
     }
     
     
+    func handleImageView(cell: MoviesCollectionViewCell, indexPath: IndexPath) async {
+        
+        let title = titles[indexPath.row]
+        
+        cell.imageView.image = nil
+        cell.nameLabel.isHidden = true
+        
+        do {
+            
+            var imageData: Data?
+            
+            if let posterPath = title.posterPath {
+                imageData = try await NetworkManager.shared.data(imagePath: posterPath)
+            }
+            
+            if let imageData = imageData {
+                cell.imageView.image = UIImage(data: imageData)
+                return
+            }
+            
+            handleDefaultImage(cell: cell, indexPath: indexPath)
+        } catch {
+            
+            handleDefaultImage(cell: cell, indexPath: indexPath)
+        }
+        
+    }
+    
+    
     func handleDefaultImage(cell: MoviesCollectionViewCell, indexPath: IndexPath) {
         
         if mediaType == .movie {
-            cell.nameLabel.text = items[indexPath.row].title
+            cell.nameLabel.text = titles[indexPath.row].title
         } else {
-            cell.nameLabel.text = items[indexPath.row].name
+            cell.nameLabel.text = titles[indexPath.row].name
         }
         
         cell.nameLabel.isHidden = false
@@ -107,12 +119,12 @@ class MoviesCollectionViewController: UICollectionViewController {
         if mediaType == .movie {
             
             let vc = MovieDetailsViewController()
-            vc.movieId = items[indexPath.row].id
+            vc.movieId = titles[indexPath.row].id
             navigationController?.pushViewController(vc, animated: true)
         } else {
             
             let vc = TVShowDetailsViewController()
-            vc.showId = items[indexPath.row].id
+            vc.showId = titles[indexPath.row].id
             navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -14,8 +14,7 @@ class MovieDetailsViewController: UIViewController{
     var movieId: Int!
     var movieDetails: MovieDetails?
     var cast = [CastMember]()
-    var allCast = [CastMember]()
-    var directors = [String]()
+    var directors = [CrewMember]()
     var isFavorite = false
     var isOnWatchlist = false
     var isRated = false
@@ -151,13 +150,9 @@ class MovieDetailsViewController: UIViewController{
     
 
     func handleCrewData(crew: [CrewMember]) {
-        
-        for crewMember in crew {
-            
-            if crewMember.job == "Director" {
-                directors.append(crewMember.name)
-            }
-        }
+
+        directors = crew.filter({ $0.job == "Director" })
+
         handleDirectors()
     }
     
@@ -168,10 +163,10 @@ class MovieDetailsViewController: UIViewController{
             
             var directorsNames = ""
             
-            directorsNames += directors[0]
+            directorsNames += directors[0].name
             for index in 1..<directors.count {
                 
-                directorsNames += ", \(directors[index])"
+                directorsNames += ", \(directors[index].name)"
             }
             movieDetailsView.directorNameLabel.text = directorsNames
             movieDetailsView.directedByTextLabel.isHidden = false
@@ -182,18 +177,7 @@ class MovieDetailsViewController: UIViewController{
 
     func handleCastData(cast: [CastMember]) {
         
-        allCast = cast
-        var numOfcastMembers = 0
-        
-        for castMember in cast {
-            if numOfcastMembers > 14 {
-                break
-            }
-            
-            self.cast.append(CastMember(id: castMember.id, name: castMember.name, profilePath: castMember.profilePath, character: castMember.character, roles: castMember.roles))
-            
-            numOfcastMembers += 1
-        }
+        self.cast = cast
         
         movieDetailsView.castView.collectionView.reloadData()
     }
@@ -423,7 +407,7 @@ class MovieDetailsViewController: UIViewController{
             movieDetailsView.activityView.favoriteButton.tintColor = .systemRed
             movieDetailsView.activityView.favoriteLabel.textColor = .systemRed
             
-            UserListHelper.shared.addToFavorite(Item(id: movieId, title: movieDetails.title, poster: movieDetails.poster, type: "movie"))
+            UserListHelper.shared.addToFavorite(Title(id: movieId, title: movieDetails.title, poster: movieDetails.poster, type: "movie"))
             isFavorite = true
         } catch {
             showAlert(title: "Cannot add \(movieDetails.title) to favorite", message: "An error occurred while adding the movie to favorites")
@@ -481,7 +465,7 @@ class MovieDetailsViewController: UIViewController{
             movieDetailsView.activityView.watchlistButton.tintColor = UIColor(named: "watchlistButtonColor")
             movieDetailsView.activityView.watchlistLabel.textColor = UIColor(named: "watchlistButtonColor")
             
-            UserListHelper.shared.addToWatchlist(Item(id: movieId, title: movieDetails.title, poster: movieDetails.poster, type: "movie"))
+            UserListHelper.shared.addToWatchlist(Title(id: movieId, title: movieDetails.title, poster: movieDetails.poster, type: "movie"))
             isOnWatchlist = true
         }catch {
             showAlert(title: "Cannot add \(movieDetails.title) to watchlist", message: "An error occurred while adding the movie to watchlist")
@@ -493,12 +477,12 @@ class MovieDetailsViewController: UIViewController{
     
     @objc func seeAllCastPressed() {
         
-        if allCast.isEmpty {
+        if cast.isEmpty {
             return
         }
         
         let vc = AllCastTableViewController()
-        vc.cast = allCast
+        vc.cast = cast
         vc.title = "All Cast"
         navigationController?.pushViewController(vc, animated: true)        
     }
@@ -615,7 +599,7 @@ class MovieDetailsViewController: UIViewController{
             
             UserListHelper.shared.updateRatings(index: index, rating: rating)
         } else {
-            UserListHelper.shared.addToUserRatings(Item(id: movieId, title: movieDetails?.title, name: nil, posterPath: movieDetails?.posterPath, rating: rating, type: "movie"))
+            UserListHelper.shared.addToUserRatings(Title(id: movieId, title: movieDetails?.title, name: nil, posterPath: movieDetails?.posterPath, rating: rating, type: "movie"))
         }
     }
     
@@ -659,7 +643,7 @@ extension MovieDetailsViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == movieDetailsView.castView.collectionView {
-            return cast.count
+            return cast.count < 15 ? cast.count : 14
         } else {
             return movieDetails?.genres.count ?? 0
         }

@@ -11,7 +11,7 @@ import UIKit
 class UserMoviesCollectionViewController: UICollectionViewController {
 
     var listType: AccountTableViewRows?
-    var list = [Item]()
+    var list = [Title]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,9 +15,9 @@ class UserListHelper {
     
     private init() { }
     
-    private var favoriteList = [Item]()
-    private var watchlist = [Item]()
-    private var userRatings = [Item]()
+    private var favoriteList = [Title]()
+    private var watchlist = [Title]()
+    private var userRatings = [Title]()
     private var guestSessionId: String?
     
     func getUserLists() {
@@ -56,7 +56,7 @@ class UserListHelper {
             let poster = document.get("poster") as? Data
             let type = document.get("type") as? String
             
-            watchlist.append(Item(id: id, title: title, poster: poster, type: type))
+            watchlist.append(Title(id: id, title: title, poster: poster, type: type))
         }
     }
     
@@ -86,7 +86,7 @@ class UserListHelper {
             let poster = document.get("poster") as? Data
             let type = document.get("type") as? String
             
-            favoriteList.append(Item(id: id, title: title, poster: poster, type: type))
+            favoriteList.append(Title(id: id, title: title, poster: poster, type: type))
             
         }
     }
@@ -120,14 +120,14 @@ class UserListHelper {
     }
     
 
-    private func handleUserRatings(movies: [Item], shows: [Item]) {
+    private func handleUserRatings(movies: [Title], shows: [Title]) {
         
         for movie in movies {
-            userRatings.append(Item(id: movie.id,title: movie.title, name: movie.name, posterPath: movie.posterPath, rating: movie.rating, type: "movie"))
+            userRatings.append(Title(id: movie.id,title: movie.title, name: movie.name, posterPath: movie.posterPath, rating: movie.rating, type: "movie"))
         }
                 
         for show in shows {
-            userRatings.append(Item(id: show.id, title: show.title, name: show.name, posterPath: show.posterPath, rating: show.rating, type: "tv"))
+            userRatings.append(Title(id: show.id, title: show.title, name: show.name, posterPath: show.posterPath, rating: show.rating, type: "tv"))
         }
         
     }
@@ -143,15 +143,15 @@ class UserListHelper {
     }
     
     
-    func getFavoriteList() -> [Item] {
+    func getFavoriteList() -> [Title] {
         return favoriteList
     }
     
-    func getWatchlist() -> [Item] {
+    func getWatchlist() -> [Title] {
         return watchlist
     }
     
-    func getUserRatings() -> [Item] {
+    func getUserRatings() -> [Title] {
         return userRatings
     }
     
@@ -188,15 +188,15 @@ class UserListHelper {
         userRatings[index].rating = rating
     }
     
-    func addToFavorite(_ item: Item) {
+    func addToFavorite(_ item: Title) {
         favoriteList.append(item)
     }
     
-    func addToWatchlist(_ item: Item) {
+    func addToWatchlist(_ item: Title) {
         watchlist.append(item)
     }
     
-    func addToUserRatings(_ item: Item) {
+    func addToUserRatings(_ item: Title) {
         userRatings.append(item)
     }
 

@@ -9,11 +9,11 @@ import Foundation
 
 struct List: Codable {
     
-    let results: [Item]
+    let results: [Title]
     
 }
 
-struct Item: Codable {
+struct Title: Codable {
     
     let id: Int
     let title: String?
@@ -31,16 +31,6 @@ struct Item: Codable {
         case poster
         case rating
         case type
-    }
-    
-    init(id: Int, title: String?, name: String?, poster: Data?) {
-        self.id = id
-        self.poster = poster
-        self.title = title
-        self.name = name
-        self.posterPath = nil
-        self.rating = nil
-        self.type = nil
     }
     
     init(id: Int, title: String?, poster: Data?, type: String?) {

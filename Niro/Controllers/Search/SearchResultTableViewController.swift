@@ -77,13 +77,10 @@ class SearchResultTableViewController: UITableViewController, UISearchResultsUpd
         
         results.removeAll()
         tableView.reloadData()
+        try Task.checkCancellation()
+        results = data.results
         
-        for result in data.results {
-            try Task.checkCancellation()
-            results.append(SearchResult(id: result.id, title: result.title, name: result.name, type: result.type, posterPath: result.posterPath, profilePath: result.profilePath))
-            
-        }
-        
+        print(results)
     }
 
 
@@ -106,10 +103,21 @@ class SearchResultTableViewController: UITableViewController, UISearchResultsUpd
         Task {
             await handleImageView(cell: cell, result: result)
             cell.mainTextLabel.text = result.title ?? result.name
-            cell.subTextLabel.text = result.type
+            cell.subTextLabel.text = getSubText(type: result.type)
         }
 
         return cell
+    }
+    
+    
+    func getSubText(type: String) -> String {
+        if type == "movie" {
+            return "Movie"
+        } else if type == "tv" {
+            return "TV Show"
+        } else {
+            return ""
+        }
     }
     
     

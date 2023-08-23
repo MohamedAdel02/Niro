@@ -10,7 +10,7 @@ import UIKit
 class UserRatingsCollectionViewController: UICollectionViewController {
 
     
-    var userRatings = [Item]()
+    var userRatings = [Title]()
     
     override func viewDidLoad() {
         super.viewDidLoad()

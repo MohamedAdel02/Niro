@@ -10,11 +10,11 @@ import Foundation
 
 struct Filmography: Codable {
     
-    let cast: [Title]
-    let crew: [Title]
+    let cast: [FilmographyItem]
+    let crew: [FilmographyItem]
 }
 
-struct Title: Codable {
+struct FilmographyItem: Codable {
     
     let id: Int
     let title: String?
