@@ -27,6 +27,8 @@
 		D914AA8A2A7CE9150077EBFA /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914AA892A7CE9150077EBFA /* CreateAccountView.swift */; };
 		D9279F052A7B6AAC00C4BDFF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9279F042A7B6AAC00C4BDFF /* AccountViewController.swift */; };
 		D9279F072A7B6AC000C4BDFF /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9279F062A7B6AC000C4BDFF /* AccountView.swift */; };
+		D940DD192A96BAC900DFDF64 /* ActivityIndicatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D940DD182A96BAC900DFDF64 /* ActivityIndicatorHelper.swift */; };
+		D940DD1B2A96C02100DFDF64 /* ActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D940DD1A2A96C02100DFDF64 /* ActivityIndicatorView.swift */; };
 		D95159922A80FB3A006E9949 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95159912A80FB3A006E9949 /* StringExtension.swift */; };
 		D9745E532A83488C009CCE81 /* DetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9745E512A83488C009CCE81 /* DetailsCollectionViewCell.swift */; };
 		D9745E5A2A83B38C009CCE81 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9745E592A83B38C009CCE81 /* PaddingLabel.swift */; };
@@ -98,6 +100,8 @@
 		D914AA892A7CE9150077EBFA /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		D9279F042A7B6AAC00C4BDFF /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		D9279F062A7B6AC000C4BDFF /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		D940DD182A96BAC900DFDF64 /* ActivityIndicatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorHelper.swift; sourceTree = "<group>"; };
+		D940DD1A2A96C02100DFDF64 /* ActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorView.swift; sourceTree = "<group>"; };
 		D95159912A80FB3A006E9949 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		D9745E512A83488C009CCE81 /* DetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCollectionViewCell.swift; sourceTree = "<group>"; };
 		D9745E592A83B38C009CCE81 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 				D9107EA62A788FC200E3148D /* Constants.swift */,
 				D99801DC2A8BC724008DC0C5 /* UserListHelper.swift */,
 				D99801DE2A8BC9D6008DC0C5 /* NetworkHelper.swift */,
+				D940DD182A96BAC900DFDF64 /* ActivityIndicatorHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 				D9745E592A83B38C009CCE81 /* PaddingLabel.swift */,
 				D9C621D02A7DEA2100B3B801 /* CustomTextField.swift */,
 				D9C621D22A7DED6400B3B801 /* CustomButton.swift */,
+				D940DD1A2A96C02100DFDF64 /* ActivityIndicatorView.swift */,
 			);
 			path = ReusableComponents;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 				D9A2750D2A8A9ECE007E9C24 /* AllFilmographyViewController.swift in Sources */,
 				D9F620982A88D62400ED3A54 /* TVShowDetailsView.swift in Sources */,
 				D9745E5C2A83C13E009CCE81 /* MovieDetails.swift in Sources */,
+				D940DD1B2A96C02100DFDF64 /* ActivityIndicatorView.swift in Sources */,
 				D9F620A42A896EC700ED3A54 /* DeleteAccountViewController.swift in Sources */,
 				D99801DF2A8BC9D6008DC0C5 /* NetworkHelper.swift in Sources */,
 				D9C3C3F12A7F2CEE00C0F16F /* AuthManager.swift in Sources */,
@@ -578,6 +585,7 @@
 				D9BC04962A8099DF00738FC8 /* ForgotPasswordViewController.swift in Sources */,
 				D9745E532A83488C009CCE81 /* DetailsCollectionViewCell.swift in Sources */,
 				D9745E5A2A83B38C009CCE81 /* PaddingLabel.swift in Sources */,
+				D940DD192A96BAC900DFDF64 /* ActivityIndicatorHelper.swift in Sources */,
 				D95159922A80FB3A006E9949 /* StringExtension.swift in Sources */,
 				D90C19DD2A8231C20093CBC7 /* MovieDetailsView.swift in Sources */,
 				D9F6208C2A876D2200ED3A54 /* RatingView.swift in Sources */,

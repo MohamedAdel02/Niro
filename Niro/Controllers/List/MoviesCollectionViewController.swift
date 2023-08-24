@@ -19,9 +19,17 @@ class MoviesCollectionViewController: UICollectionViewController {
     
     var url = NetworkHelper.getPopularMoviesURL()
     var mediaType: MediaType = .movie
+    var activityIndicator: ActivityIndicatorHelper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator = ActivityIndicatorHelper(view: view)
+        
+        Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            activityIndicator.showIndicator()
+        }
 
         self.collectionView.register(MoviesCollectionViewCell.self, forCellWithReuseIdentifier: K.Identifier.moviesCollectionViewCell)
         collectionView.showsVerticalScrollIndicator = false
@@ -47,8 +55,8 @@ class MoviesCollectionViewController: UICollectionViewController {
         let data = try await NetworkManager.shared.data(url: url)
         let decodedData = try NetworkManager.shared.decodeData(data: data) as List
         try await handleData(data: decodedData)
+        activityIndicator.hideIndicator()
         collectionView.reloadData()
-        
     }
     
     

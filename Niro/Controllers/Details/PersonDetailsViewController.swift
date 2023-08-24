@@ -14,6 +14,7 @@ class PersonDetailsViewController: UIViewController {
     var personDetails: PersonDetails?
     var filmography = [FilmographyItem]()
     var allFilmography: Filmography?
+    var activityIndicator: ActivityIndicatorHelper!
     
     var websites = [(name: "TMDB", url: K.URL.tmdbPerson)]
     
@@ -21,6 +22,13 @@ class PersonDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         view = personDetailsView
+        
+        activityIndicator = ActivityIndicatorHelper(view: view)
+        
+        Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            activityIndicator.showIndicator()
+        }
         
         navigationItem.backButtonTitle = ""
         
@@ -149,6 +157,8 @@ class PersonDetailsViewController: UIViewController {
         if let deathDate = personDetails.deathday {
             setDeathDate(deathDate: deathDate)
         }
+        
+        activityIndicator.hideIndicator()
     }
     
     

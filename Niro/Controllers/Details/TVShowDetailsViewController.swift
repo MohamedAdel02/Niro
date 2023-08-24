@@ -17,6 +17,7 @@ class TVShowDetailsViewController: UIViewController {
     var isOnWatchlist = false
     var isRated = false
     var rating = 0.0
+    var activityIndicator: ActivityIndicatorHelper!
     
     let websites = [(name: "TMDB", url: K.URL.tmdbTVSHow)]
     
@@ -24,6 +25,13 @@ class TVShowDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         view = tvShowDetailsView
+        
+        activityIndicator = ActivityIndicatorHelper(view: view)
+        
+        Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            activityIndicator.showIndicator()
+        }
         
         navigationItem.backButtonTitle = ""
         
@@ -201,6 +209,7 @@ class TVShowDetailsViewController: UIViewController {
         tvShowDetailsView.topContentView.infoAboveTitleLabel.text = getInfoAboveTitle(seasons: showDetails.seasons)
         tvShowDetailsView.activityView.ratingLabel.text = getVoteAverage(voteAverage: showDetails.voteAverage)
         
+        activityIndicator.hideIndicator()
         tvShowDetailsView.seasonsView.collectionView.reloadData()
 
     }
@@ -632,6 +641,7 @@ extension TVShowDetailsViewController: UICollectionViewDataSource, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.Identifier.detailsCollectionViewCell, for: indexPath) as! DetailsCollectionViewCell
         
         cell.imageView.image = nil
+        cell.defaultImageView.isHidden = true
         
         Task {
             await handleImageView(cell: cell, indexPath: indexPath, defaultImage: "person.fill")

@@ -20,12 +20,20 @@ class MovieDetailsViewController: UIViewController{
     var isRated = false
     var rating = 0.0
     var websites = [(name: "TMDB", url: K.URL.tmdbMovie)]
+    var activityIndicator: ActivityIndicatorHelper!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view = movieDetailsView
+        
+        activityIndicator = ActivityIndicatorHelper(view: view)
+        
+        Task {
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            activityIndicator.showIndicator()
+        }
         
         navigationItem.backButtonTitle = ""
         
@@ -204,6 +212,8 @@ class MovieDetailsViewController: UIViewController{
         movieDetailsView.topContentView.infoAboveTitleLabel.text = getInfoAboveTitle(runtime: movieDetails.runtime, releaseDate: movieDetails.releaseDate)
 
         movieDetailsView.activityView.ratingLabel.text = getVoteAverage(voteAverage: movieDetails.voteAverage)
+        
+        activityIndicator.hideIndicator()
 
     }
     
