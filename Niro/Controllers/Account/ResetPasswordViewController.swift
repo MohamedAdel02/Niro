@@ -16,6 +16,9 @@ class ResetPasswordViewController: UIViewController {
         
         view = resetPasswordView
         
+        resetPasswordView.currentPasswordTextField.delegate = self
+        resetPasswordView.newPasswordTextField.delegate = self
+        
         resetPasswordView.resetButton.addTarget(self, action: #selector(resetPressed), for: UIControl.Event.touchUpInside)
     }
     
@@ -71,5 +74,25 @@ class ResetPasswordViewController: UIViewController {
         resetPasswordView.errorLabel.isHidden = false
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
+}
+
+// MARK: - UITextFieldDelegate
+
+extension ResetPasswordViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == resetPasswordView.currentPasswordTextField {
+            return resetPasswordView.newPasswordTextField.becomeFirstResponder()
+        } else {
+            resetPressed()
+            return true
+        }
+    }
     
 }
+

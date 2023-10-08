@@ -21,8 +21,9 @@ class EditProfileView: UIView {
     let nameTextField: CustomTextField = {
        let textField = CustomTextField()
         textField.textColor = .label
+        textField.returnKeyType = .done
         return textField
-    }()
+    }() 
     
     let emailLabel: UILabel = {
        let label = UILabel()

@@ -47,6 +47,7 @@ class ResetPasswordView: UIView {
        let textField = CustomTextField()
         textField.placeholder = "At least 6 characters"
         textField.isSecureTextEntry = true
+        textField.returnKeyType = .done
         textField.textColor = .label
         return textField
     }()

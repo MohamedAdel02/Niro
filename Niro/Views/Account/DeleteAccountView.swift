@@ -40,6 +40,7 @@ class DeleteAccountView: UIView {
        let textField = CustomTextField()
         textField.placeholder = "Enter your password"
         textField.isSecureTextEntry = true
+        textField.returnKeyType = .done
         textField.textColor = .label
         return textField
     }()

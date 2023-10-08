@@ -109,6 +109,8 @@ class SearchTableViewController: UITableViewController, SelectCellProtocol {
         vc.navigationItem.largeTitleDisplayMode = .never
         searchController.searchBar.text = ""
         navigationController?.pushViewController(vc, animated:true)
+        searchController.isActive = false
+        
     }
     
     

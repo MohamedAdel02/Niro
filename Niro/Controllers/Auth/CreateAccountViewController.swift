@@ -20,12 +20,12 @@ class CreateAccountViewController: UIViewController {
         createAccountView.passwordTextField.delegate = self
         createAccountView.nameTextField.delegate = self
 
-        createAccountView.signUpButton.addTarget(self, action: #selector(singUpPressed), for: UIControl.Event.touchUpInside)
+        createAccountView.signUpButton.addTarget(self, action: #selector(signUpPressed), for: UIControl.Event.touchUpInside)
         
     }
 
     
-    @objc func singUpPressed() {
+    @objc func signUpPressed() {
                 
         let name = createAccountView.nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let email = createAccountView.emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -109,6 +109,27 @@ extension CreateAccountViewController: UITextFieldDelegate {
         UIView.animate(withDuration: 0.3, animations: {
             self.view.frame = CGRect(x:self.view.frame.origin.x, y:self.view.frame.origin.y + 150, width:self.view.frame.size.width, height:self.view.frame.size.height)
         })
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+                
+        switch textField {
+            
+        case createAccountView.nameTextField:
+            return createAccountView.emailTextField.becomeFirstResponder()
+            
+        case createAccountView.emailTextField:
+            return createAccountView.passwordTextField.becomeFirstResponder()
+            
+        case createAccountView.passwordTextField:
+            signUpPressed()
+            return true
+            
+        default:
+            return textField.resignFirstResponder()
+            
+        }
+        
     }
     
 }

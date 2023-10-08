@@ -180,7 +180,6 @@ class SearchResultTableViewController: UITableViewController, UISearchResultsUpd
         let result = results[indexPath.row]
         
         self.delegate?.didSelectCell(id: result.id, type: result.type)
-        dismiss(animated: true)
  
     }
 

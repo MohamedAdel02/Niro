@@ -16,6 +16,8 @@ class DeleteAccountViewController: UIViewController {
         
         view = deleteAccountView
         
+        deleteAccountView.passwordTextField.delegate = self
+        
         deleteAccountView.deleteButton.addTarget(self, action: #selector(deletePressed), for: UIControl.Event.touchUpInside) 
     }
     
@@ -64,5 +66,20 @@ class DeleteAccountViewController: UIViewController {
         deleteAccountView.errorLabel.isHidden = false
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
 }
+
+// MARK: - UITextFieldDelegate
+
+extension DeleteAccountViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        deletePressed()
+        return true
+    }
+    
+}
+

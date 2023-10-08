@@ -18,6 +18,7 @@ class EditProfileViewController: UIViewController {
         view = editProfileView
         
         navigationItem.backButtonTitle = ""
+        editProfileView.nameTextField.delegate = self
         
         editProfileView.updateButton.addTarget(self, action: #selector(updatePressed), for: UIControl.Event.touchUpInside)
         editProfileView.deleteAccountButton.addTarget(self, action: #selector(deleteAccountPressed), for: UIControl.Event.touchUpInside)
@@ -68,5 +69,19 @@ class EditProfileViewController: UIViewController {
         let vc = ResetPasswordViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 
+}
+
+// MARK: - UITextFieldDelegate
+
+extension EditProfileViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
 }

@@ -109,4 +109,17 @@ extension SignInViewController: UITextFieldDelegate {
         })
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == signInView.emailTextField {
+            return signInView.passwordTextField.becomeFirstResponder()
+        } else if textField == signInView.passwordTextField {
+            signInPressed()
+            return true
+        } else {
+            return textField.resignFirstResponder()
+        }
+        
+    }
+    
 }

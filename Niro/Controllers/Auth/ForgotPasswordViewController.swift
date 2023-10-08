@@ -115,5 +115,12 @@ extension ForgotPasswordViewController: UITextFieldDelegate {
         })
     }
     
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        sendPressed()
+        return textField.resignFirstResponder()
+    }
+    
 }
 
